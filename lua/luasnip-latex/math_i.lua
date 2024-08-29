@@ -16,17 +16,8 @@ function M.retrieve(is_math)
 	local fmta = require("luasnip.extras.fmt").fmta
 	local i = ls.insert_node
 	local d = ls.dynamic_node
-	local t = ls.text_node
 	local sn = ls.snippet_node
 	local rep = require("luasnip.extras").rep
-	local get_visual = function(_, parent)
-		local text = parent.snippet.env.LS_SELECT_DEDENT
-		if #text > 0 then
-			return sn(nil, { i(1, text) })
-		else
-			return sn(nil, { i(1) })
-		end
-	end
 
 	local get_save_text = function(_, parent)
 		local t = parent.snippet.env.LS_SELECT_DEDENT
@@ -184,13 +175,6 @@ function M.retrieve(is_math)
 				repeat_duplicates = true,
 			})
 		),
-		-- exponencial
-		s({ trig = "xp", name = "^{}" }, fmta("^{<>}<>", { i(1), i(0) })),
-		s({ trig = "cp", name = "xp with much power" }, fmta("^{(<>)}<>", { i(1), i(0) })),
-		s({ trig = "cb", name = "Cube ^3" }, { t("^3 ") }),
-		s({ trig = "cd", name = "Square ^2" }, { t("^2 ") }),
-		s({ trig = "sq", name = "square root" }, fmta([[\sqrt{<>} <>]], { d(1, get_visual), i(0) })),
-		s({ trig = "inv", name = "inverse" }, t("^{-1}")),
 	}
 end
 return M
