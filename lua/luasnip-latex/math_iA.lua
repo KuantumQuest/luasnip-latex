@@ -218,7 +218,15 @@ function M.retrieve(is_math)
 		s_b({ trig = "atan", name = "arctan" }, t("\\arctan")),
 		s_b({ trig = "asec", name = "arcsec" }, t("\\arcsec")),
 		-- format
-		s_b({ trig = "sin", name = "sin", priority = 10 }, t("\\sin")),
+		s_b(
+			{ trig = "mathrm", name = "mathrm" },
+			fmta(
+				[[
+    \mathrm{<>}<>
+    ]],
+				{ i(1), i(0) }
+			)
+		),
 	}
 end
 
