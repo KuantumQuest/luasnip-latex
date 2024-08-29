@@ -153,10 +153,10 @@ function M.retrieve(is_math)
 		s_b({ trig = "cmp", name = "complement" }, t("^{c}")),
 
 		-- Arrow(flechas)
-		s_b({ trig = "l-r", name = "leftrightarrow", priority = 20 }, { t("\\leftrightarrow ") }),
-		s_b({ trig = "...", name = "ldots", priority = 10 }, { t("\\ldots ") }),
-		s_b({ trig = "m-r", name = "mapsto", dscr = "flecha" }, { t("\\mapsto ") }),
-		s_b({ trig = "-r", name = "to", priority = 10 }, { t("\\to ") }),
+		s({ trig = "l-r", name = "leftrightarrow", priority = 20 }, { t("\\leftrightarrow ") }),
+		s({ trig = "...", name = "ldots", priority = 10 }, { t("\\ldots ") }),
+		s({ trig = "m-r", name = "mapsto", dscr = "flecha" }, { t("\\mapsto ") }),
+		s({ trig = "-r", name = "to", priority = 10 }, { t("\\to ") }),
 
 		-- Logic
 		s_b({ trig = "iff", name = "iff" }, { t("\\iff ") }),
