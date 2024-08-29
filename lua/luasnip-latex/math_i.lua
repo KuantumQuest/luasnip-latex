@@ -1,3 +1,4 @@
+-- Solo math
 --- Snippets fáciles.
 
 local M = {}
@@ -7,7 +8,7 @@ local utils = require("luasnip-latex.utils.utils")
 local pipe = utils.pipe
 
 function M.retrieve(is_math)
-	local snippet = ls.extend_decorator.apply(ls.snippet, {
+	local s = ls.extend_decorator.apply(ls.snippet, {
 		wordTrig = false,
 		condition = pipe({ is_math }), -- Esta variable es una función compuesta!
 		show_condition = is_math,
@@ -15,8 +16,17 @@ function M.retrieve(is_math)
 	local fmta = require("luasnip.extras.fmt").fmta
 	local i = ls.insert_node
 	local d = ls.dynamic_node
+	local t = ls.text_node
 	local sn = ls.snippet_node
 	local rep = require("luasnip.extras").rep
+	local get_visual = function(_, parent)
+		local text = parent.snippet.env.LS_SELECT_DEDENT
+		if #text > 0 then
+			return sn(nil, { i(1, text) })
+		else
+			return sn(nil, { i(1) })
+		end
+	end
 
 	local get_save_text = function(_, parent)
 		local t = parent.snippet.env.LS_SELECT_DEDENT
@@ -28,7 +38,7 @@ function M.retrieve(is_math)
 	end
 
 	return {
-		snippet(
+		s(
 			{
 				trig = "sum",
 				name = "sum",
@@ -40,7 +50,7 @@ function M.retrieve(is_math)
 				d(4, get_save_text, {}),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "tal",
 				name = "taylor",
@@ -61,7 +71,7 @@ function M.retrieve(is_math)
 				repeat_duplicates = true,
 			}
 		),
-		snippet(
+		s(
 			{
 				trig = "prd",
 				name = "product",
@@ -73,7 +83,7 @@ function M.retrieve(is_math)
 				d(4, get_save_text, {}),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "lm",
 				name = "limit",
@@ -84,7 +94,7 @@ function M.retrieve(is_math)
 				d(3, get_save_text, {}),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "par",
 				name = "Derivada parcial",
@@ -96,7 +106,7 @@ function M.retrieve(is_math)
 				i(3),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "ddx",
 				name = "d/dx",
@@ -108,7 +118,7 @@ function M.retrieve(is_math)
 			})
 		),
 		-- parse_snippet({ trig = "pmat", name = "pmat" }, "\\begin{pmatrix} $1 \\end{pmatrix} $0"),
-		snippet(
+		s(
 			{
 				trig = "lrp",
 				name = "left( right)",
@@ -118,7 +128,7 @@ function M.retrieve(is_math)
 				i(0),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "lri",
 				name = "left| right|",
@@ -128,7 +138,7 @@ function M.retrieve(is_math)
 				i(0),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "lrl",
 				name = "left{ right}",
@@ -138,7 +148,7 @@ function M.retrieve(is_math)
 				i(0),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "lrc",
 				name = "left[ right]",
@@ -148,7 +158,7 @@ function M.retrieve(is_math)
 				i(0),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "lra",
 				name = "left< right>",
@@ -158,7 +168,7 @@ function M.retrieve(is_math)
 				i(0),
 			})
 		),
-		snippet(
+		s(
 			{
 				trig = "seq",
 				name = "Sequence (series)",
@@ -174,6 +184,13 @@ function M.retrieve(is_math)
 				repeat_duplicates = true,
 			})
 		),
+		-- exponencial
+		s({ trig = "xp", name = "^{}" }, fmta("^{<>}<>", { i(1), i(0) })),
+		s({ trig = "cp", name = "xp with much power" }, fmta("^{(<>)}<>", { i(1), i(0) })),
+		s({ trig = "cb", name = "Cube ^3" }, { t("^3 ") }),
+		s({ trig = "cd", name = "Square ^2" }, { t("^2 ") }),
+		s({ trig = "sq", name = "square root" }, fmta([[\sqrt{<>} <>]], { d(1, get_visual), i(0) })),
+		s({ trig = "inv", name = "inverse" }, t("^{-1}")),
 	}
-end -- eres un estúpido hola
+end
 return M

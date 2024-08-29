@@ -108,13 +108,6 @@ function M.retrieve(is_math)
 			end),
 			i(0),
 		}),
-		-- exponencial
-		s({ trig = "xp", name = "^{}", wordTrig = false }, fmta("^{<>}<>", { i(1), i(0) })),
-		s({ trig = "cp", name = "xp with much power", wordTrig = false }, fmta("^{(<>)}<>", { i(1), i(0) })),
-		s({ trig = "cb", name = "Cube ^3", wordTrig = false }, { t("^3 ") }),
-		s({ trig = "cd", name = "Square ^2", wordTrig = false }, { t("^2 ") }),
-		s({ trig = "sq", name = "square root" }, fmta([[\sqrt{<>} <>]], { d(1, get_visual), i(0) })),
-		s({ trig = "inv", name = "inverse", wordTrig = false }, t("^{-1}")),
 		--
 		s({ trig = "EE", name = "exists" }, { t("\\exists ") }),
 		s({ trig = "AA", name = "forall" }, { t("\\forall ") }),
@@ -215,6 +208,8 @@ function M.retrieve(is_math)
 		s({ trig = "acos", name = "arcsin" }, t("\\arccos")),
 		s({ trig = "atan", name = "arctan" }, t("\\arctan")),
 		s({ trig = "asec", name = "arcsec" }, t("\\arcsec")),
+		-- format
+		s({ trig = "sin", name = "sin", priority = 10 }, t("\\sin")),
 	}
 end
 
