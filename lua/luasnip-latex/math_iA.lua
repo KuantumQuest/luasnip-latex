@@ -219,7 +219,7 @@ function M.retrieve(is_math)
 		s_b({ trig = "asec", name = "arcsec" }, t("\\arcsec")),
 		-- format
 		s_b(
-			{ trig = "mathrm", name = "mathrm" },
+			{ trig = "rm", name = "mathrm" },
 			fmta(
 				[[
     \mathrm{<>}<>
