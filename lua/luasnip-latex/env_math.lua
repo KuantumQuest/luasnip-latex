@@ -23,7 +23,7 @@ function M.retrieve(not_math)
 	local s = ls.extend_decorator.apply(ls.snippet, { condition = pipe({ not_math }) })
 
 	return {
-		s({ trig = "mk", name = "Line Math" }, fmta([[$ <> $<>]], { d(1, get_visual), i(0) })),
+		s({ trig = "mk", name = "Line Math" }, fmta([[$<>$<>]], { d(1, get_visual), i(0) })),
 		s(
 			{ trig = "nk", name = "Block Math" },
 			fmta(

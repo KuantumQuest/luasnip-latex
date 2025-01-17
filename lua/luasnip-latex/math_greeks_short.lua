@@ -8,7 +8,7 @@ local M = {}
 
 M.decorator = {}
 
-local prefix_sgreek = "æ"
+local prefix_sgreek = "@"
 local trigineitor = function(prefix, pattern)
 	return string.format("%s(%s)", prefix, pattern)
 end
@@ -35,10 +35,10 @@ end
 
 local vargreek_snippets = function()
 	local tbl = {
-		{ prefix_sgreek, "E", "varepsilon" },
-		{ prefix_sgreek, "P", "varphi" },
-		{ prefix_sgreek, "R", "varrho" },
-		{ prefix_sgreek, "T", "vartheta" },
+		{ prefix_sgreek, "ve", "varepsilon" },
+		{ prefix_sgreek, "vp", "varphi" },
+		{ prefix_sgreek, "vr", "varrho" },
+		{ prefix_sgreek, "vt", "vartheta" },
 	}
 
 	local build = build_with_priority(trigineitor, unique_node, 10)
@@ -52,6 +52,7 @@ local greek_lower_snippets = function()
 		{ prefix_sgreek, "ph", "phi" },
 		{ prefix_sgreek, "th", "theta" },
 		{ prefix_sgreek, "al", "alpha" },
+		{ prefix_sgreek, "be", "beta" },
 		{ prefix_sgreek, "ga", "gamma" },
 		{ prefix_sgreek, "ze", "zeta" },
 		{ prefix_sgreek, "et", "eta" },
@@ -63,6 +64,8 @@ local greek_lower_snippets = function()
 		{ prefix_sgreek, "ta", "tau" },
 		{ prefix_sgreek, "om", "omega" },
 		{ prefix_sgreek, "ch", "chi" },
+		{ prefix_sgreek, "si", "sigma" },
+		{ prefix_sgreek, "ps", "psi" },
 	}
 	local build = build_with_priority(trigineitor, unique_node, 10)
 	return vim.tbl_map(build, tbl)
@@ -75,6 +78,9 @@ local greek_upper_snippets = function()
 		{ prefix_sgreek, "Ga", "Gamma" },
 		{ prefix_sgreek, "Pi", "Pi" },
 		{ prefix_sgreek, "Om", "Omega" },
+		{ prefix_sgreek, "Si", "Sigma" },
+		{ prefix_sgreek, "La", "Lambda" },
+		{ prefix_sgreek, "Ps", "Psi" },
 	}
 	local build = build_with_priority(trigineitor, unique_node, 10)
 	return vim.tbl_map(build, tbl)
@@ -84,7 +90,7 @@ local short_commands = function()
 	local tbl = {
 		{ "", "ln", "ln " },
 		{ "", "log", "log " },
-		{ "", "exp", "exp " },
+		{ "", "exx", "exp " },
 		{ "", "perp", "perp " },
 		{ "", "int", "int " },
 	}

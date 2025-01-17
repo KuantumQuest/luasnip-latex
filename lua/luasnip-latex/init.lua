@@ -21,13 +21,13 @@ M.setup = function(opts)
 			local is_math = utils.with_opts(utils.is_math, opts.use_treesitter)
 			-- Obtiene la FUNCIÓN para determina si NO está en un entorno matemático. Prácticamente lo contrario a is_math.
 			local not_math = utils.with_opts(utils.not_math, opts.use_treesitter)
-			M.setup_tex(is_math, not_math) --Se define más adelante.
+			M.etup_tex(is_math, not_math) --Se define más adelante.
 		end,
 	})
 
 	if opts.allow_on_markdown then
 		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "markdown",
+			pattern = { "markdown", "rmd" },
 			group = augroup,
 			once = true,
 			callback = function()
@@ -64,7 +64,7 @@ M.setup_tex = function(is_math, not_math)
 	ls.add_snippets("tex", {
 		ls.snippet(
 			{
-				trig = "pac",
+				trig = "pack",
 				name = "Package",
 			},
 			require("luasnip.extras.fmt").fmta("\\usepackage[<>]{<>}", {
@@ -105,6 +105,9 @@ M.setup_markdown = function()
 		local t = require(("luasnip-latex.%s"):format(str)).retrieve(not_math)
 		vim.list_extend(to_filter, vim.tbl_map(trigger_of_snip, t)) -- Obtiene el "trigger" de cada snippet y lo almacena en "to_filter".
 	end
+	-- Añadir los entornode markdown, como align:
+	local env_markdown = require("luasnip-latex.env_markdown").retrieve(is_math)
+	ls.add_snippets("markdown", env_markdown, { default_priority = 0 })
 
 	local filtered = vim.tbl_filter(function(s)
 		return not vim.tbl_contains(to_filter, s.trigger)
@@ -138,11 +141,9 @@ M.setup_markdown = function()
       $$
       <>
       $$
-      <>
       ]],
 				{
 					d(1, get_visual),
-					i(0),
 				}
 			)
 		),

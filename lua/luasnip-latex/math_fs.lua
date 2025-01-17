@@ -32,7 +32,7 @@ local frac_parens_nodes = {
 			elseif stripped:sub(idx, idx) == "(" then
 				depth = depth - 1
 			end
-			if depth == 0 then
+			if depth == 0 or stripped:sub(idx, idx) == "=" then
 				break
 			end
 			idx = idx - 1 --recorriendo desde el final hasta el inicio de "stripped""
@@ -40,7 +40,15 @@ local frac_parens_nodes = {
 		if depth ~= 0 then
 			return sn(nil, { t(stripped .. "\\frac{"), i(1), t("}{"), i(2), t("}") })
 		else
-			return sn(nil, { t("\\frac{" .. stripped .. "}{"), i(1), t("}") })
+			-- Hacemos modificación por si existe un patron del tipo: \frac{(a \cdot b )}{c}= (d \cdot e)
+			local valor_antes = string.match(stripped, "(.*)=")
+			local valor_despues = string.match(stripped, "=(.*)")
+			if valor_despues then
+				stripped = string.gsub(valor_despues, "^%s*(.-)%s*$", "%1") -- Quita espacios al inicio y al final
+				return sn(nil, { t(valor_antes .. " = " .. "\\frac{" .. stripped .. "}{"), i(1), t("}") })
+			else
+				return sn(nil, { t("\\frac{" .. stripped .. "}{"), i(1), t("}") })
+			end
 		end
 	end),
 	i(0),
@@ -81,7 +89,7 @@ function M.retrieve(is_math)
 	local snippets = {
 		s(
 			{ trig = "ff", name = "fraction", wordTrig = true },
-			fmta("\\frac{<>}{<>} <>", { d(1, get_visual), i(2), i(0) })
+			fmta("\\frac{<>}{<>}<>", { d(1, get_visual), i(2), i(0) })
 		),
 		s(
 			{ trig = ".*%)ff", name = "() fraction", wordTrig = false, regTrig = true, priority = 10 },
@@ -92,7 +100,7 @@ function M.retrieve(is_math)
 	}
 	for _, pattern in ipairs(frac_no_parens_triggers) do
 		snippets[#snippets + 1] = s(
-			{ trig = pattern, name = "[somethin]fraction", worTrig = false, regTrig = true, priority = 10 },
+			{ trig = pattern, name = "[something]fraction", worTrig = false, regTrig = true, priority = 10 },
 			vim.deepcopy(frac_no_parens_nodes)
 		)
 	end
