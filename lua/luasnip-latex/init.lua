@@ -21,13 +21,13 @@ M.setup = function(opts)
 			local is_math = utils.with_opts(utils.is_math, opts.use_treesitter)
 			-- Obtiene la FUNCIÓN para determina si NO está en un entorno matemático. Prácticamente lo contrario a is_math.
 			local not_math = utils.with_opts(utils.not_math, opts.use_treesitter)
-			M.etup_tex(is_math, not_math) --Se define más adelante.
+			M.setup_tex(is_math, not_math) --Se define más adelante.
 		end,
 	})
 
 	if opts.allow_on_markdown then
 		vim.api.nvim_create_autocmd("FileType", {
-			pattern = { "markdown", "rmd" },
+			pattern = { "markdown", "rmd", "qmd" },
 			group = augroup,
 			once = true,
 			callback = function()
