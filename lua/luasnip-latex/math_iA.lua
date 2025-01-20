@@ -72,7 +72,11 @@ function M.retrieve(is_math)
 		),
 		s_nb(
 			{ trig = "defu", name = "Texto inferior sin llaves (def under)" },
-			fmta([[\underset{<>}{<>}]], { d(1, get_visual), i(2) })
+			fmta([[\underset{<>}{<>}]], { i(2), d(1, get_visual) })
+		),
+		s_nb(
+			{ trig = "defo", name = "Texto superior sin llaves (def over)" },
+			fmta([[\overset{<>}{<>}]], { i(2), d(1, get_visual) })
 		),
 		s({
 			trig = "(\\?%a+)hat",
