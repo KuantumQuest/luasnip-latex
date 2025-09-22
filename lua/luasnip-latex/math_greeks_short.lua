@@ -88,11 +88,11 @@ end
 
 local short_commands = function()
 	local tbl = {
-		{ "", "ln", "ln " },
-		{ "", "log", "log " },
-		{ "", "exx", "exp " },
-		{ "", "perp", "perp " },
-		{ "", "int", "int " },
+		{ "", "ln", "ln" },
+		{ "", "log", "log" },
+		{ "", "exx", "exp" },
+		{ "", "perp", "perp" },
+		{ "", "int", "int" },
 	}
 	local build = build_with_priority(trigineitor, unique_node, 10)
 	return vim.tbl_map(build, tbl)

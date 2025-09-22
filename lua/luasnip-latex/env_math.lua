@@ -31,9 +31,8 @@ function M.retrieve(not_math)
       \[
         <>
       \]
-      <>
       ]],
-				{ d(1, get_visual), i(0) }
+				{ d(1, get_visual) }
 			)
 		),
 	}

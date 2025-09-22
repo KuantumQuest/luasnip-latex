@@ -172,7 +172,7 @@ function M.retrieve(is_math)
 		s_nb({ trig = "nn", name = "cap" }, { t("\\cap") }),
 		s_nb(
 			{ trig = "bnn", name = "bigcap", priority = 10 },
-			fmta("\\bigcap_{<> \\in <>} <>", { i(1, "i"), i(2, "I"), i(0) })
+			fmta("\\bigcap_{<> \\in <>}<>", { i(1, "i"), i(2, "I"), i(0) })
 		),
 		s_nb({ trig = "uu", name = "cup" }, { t("\\cup") }),
 		s_nb(
@@ -220,7 +220,7 @@ function M.retrieve(is_math)
 		s_nb({ trig = "vec", name = "vector", wordTrig = false }, fmta([[\vec{<>}<>]], { i(1), i(0) })),
 		--
 		s_nb({ trig = "nrm", name = "norm" }, fmta("\\|<>\\|<>", { i(1), i(0) })),
-		s_nb({ trig = "gg", name = "nombre", priority = 1000 }, { t("\\gg") }),
+		s_nb({ trig = "gg", name = ">>", priority = 1000 }, { t("\\gg") }),
 		s_nb({ trig = "<<", name = "<<" }, { t("\\ll ") }),
 		s_nb({ trig = "txt", name = "text" }, fmta("\\text{<>}<>", { d(1, get_visual), i(0) })),
 		s_nb(
@@ -258,7 +258,7 @@ function M.retrieve(is_math)
 		s_nb({ trig = "NN", name = "Natural Numbers" }, { t("\\mathbb{N}") }),
 		s_nb({ trig = "==", name = "equals", wordTrig = false }, fmta("&= <> \\\\", i(1))),
 		s_nb({ trig = "!=", name = "not equals", wordTrig = false }, { t("\\neq") }),
-		s_nb({ trig = "tons", name = "implies", wordTrig = false }, { t("\\implies") }),
+		s_nb({ trig = "imp", name = "implies", wordTrig = false }, { t("\\implies") }),
 		s_nb({ trig = "simp", name = "short implies", priority = 50 }, { t("\\Rightarrow") }),
 		s_nb({ trig = "rimp", name = "implied by" }, t("\\impliedby")),
 		s_nb({ trig = "<=", name = "less equal", wordTrig = false }, t("\\le")),
@@ -268,10 +268,11 @@ function M.retrieve(is_math)
 		--
 		s_nb({ trig = "md", name = "mid" }, { t("\\mid ") }),
 		s_nb({ trig = "abs", name = "absolute" }, fmta([[\lvert <> \rvert <>]], { d(1, get_visual), i(0) })),
-		s_nb({ trig = "lll", name = "l" }, { t("\\ell ") }),
+		s_nb({ trig = "ll", name = "l" }, { t("\\ell ") }),
 
 		-- Simbol
 		s({ trig = "+-", name = "+-", wordTrig = false }, { t("\\pm") }),
+		s({ trig = "-+", name = "-+", wordTrig = false }, { t("\\mp") }),
 
 		-- Integral
 		s_nb({ trig = "oint", name = "integral", priority = 30 }, fmta([[\oint_{<>}]], { i(1) })),

@@ -89,7 +89,7 @@ function M.retrieve(is_math)
 	local snippets = {
 		s(
 			{ trig = "ff", name = "fraction", wordTrig = true },
-			fmta("\\frac{<>}{<>}<>", { d(1, get_visual), i(2), i(0) })
+			fmta("\\frac{<>}{<>}", { d(1, get_visual), i(2) })
 		),
 		s(
 			{ trig = ".*%)ff", name = "() fraction", wordTrig = false, regTrig = true, priority = 10 },

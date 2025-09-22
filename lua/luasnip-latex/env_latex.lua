@@ -33,9 +33,9 @@ function M.retrieve(not_math)
 			{ trig = "ali", name = "Align" },
 			fmta(
 				[[
-      \begin{align}
+      \begin{align*}
         <>
-      \end{align}
+      \end{align*}
       <>
       ]],
 				{

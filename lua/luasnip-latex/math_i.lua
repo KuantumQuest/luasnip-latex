@@ -65,7 +65,7 @@ function M.retrieve(is_math)
 		),
 		s(
 			{
-				trig = "prod",
+				trig = "pro",
 				name = "product",
 			},
 			fmta("\\prod_{<>=<>}^{<>}<>", {
@@ -82,7 +82,7 @@ function M.retrieve(is_math)
 				desc = "Derivada parcial en modo función (df/dx)",
 			},
 			fmta([[\frac{\partial <>}{\partial <>}<>]], {
-				i(1),
+				i(1, "f"),
 				i(2, "x"),
 				i(3),
 			})
@@ -94,7 +94,7 @@ function M.retrieve(is_math)
 				desc = "Derivada parcial doble de una variable",
 			},
 			fmta([[\frac{\partial^2 <>}{\partial <> ^2}<>]], {
-				i(1),
+				i(1, "f"),
 				i(2, "x"),
 				i(3),
 			})
@@ -106,7 +106,7 @@ function M.retrieve(is_math)
 				desc = "Derivada parcial doble mixta",
 			},
 			fmta([[\frac{\partial^2 <>}{\partial <> \partial <>}<>]], {
-				i(1),
+				i(1, "f"),
 				i(2, "x"),
 				i(3, "y"),
 				i(4),
@@ -318,7 +318,7 @@ function M.retrieve(is_math)
 			)
 		),
 		s(
-			{ trig = "matI", name = "Matriz Identidad 33" },
+			{ trig = "matD", name = "Matriz diagonal 3x3" },
 			fmta(
 				[[
 \begin{bmatrix}
@@ -328,9 +328,9 @@ function M.retrieve(is_math)
 \end{bmatrix}
       ]],
 				{
-					a = i(1),
-					b = i(2),
-					c = i(3),
+					a = i(1,"1"),
+					b = i(2,"1"),
+					c = i(3,"1"),
 				}
 			)
 		),
@@ -386,7 +386,7 @@ function M.retrieve(is_math)
 			)
 		),
 		s(
-			{ trig = "matV", name = "Matriz vector", priority = 20 },
+			{ trig = "matV", name = "Matriz vector general", priority = 20 },
 			fmta(
 				[[
 \begin{bmatrix}
@@ -437,6 +437,27 @@ function M.retrieve(is_math)
 					i(4, "0"),
 					i(5, "0"),
 					i(6, "0"),
+				}
+			)
+		),
+		s(
+			{ trig = "mat24", name = "Matriz 24" },
+			fmta(
+				[[
+\begin{bmatrix}
+  <> & <> & <> & <>\\
+  <> & <> & <> & <>
+\end{bmatrix}
+      ]],
+				{
+					i(1, "0"),
+					i(2, "0"),
+					i(3, "0"),
+					i(4, "0"),
+					i(5, "0"),
+					i(6, "0"),
+					i(7, "0"),
+					i(8, "0"),
 				}
 			)
 		),

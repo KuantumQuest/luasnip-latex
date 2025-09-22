@@ -31,7 +31,7 @@ function M.retrieve(is_math)
 				[[
       \begin{align*}
         <>
-      \end{align*}<>
+      \end{align*}
       ]],
 				{
 					d(1, get_visual),
