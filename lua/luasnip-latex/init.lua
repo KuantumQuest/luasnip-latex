@@ -1,14 +1,17 @@
 local M = {}
 
--- Opciones predeterminadas
+-- DEFAULT OPTS
+
 local default_opts = {
 	use_treesitter = false,
 	allow_on_markdown = true,
 }
 
+-- PLUGGIN SETUP
+
 M.setup = function(opts)
 	-- Toma más prioridad a la tabla de la derecha 'opts or {}', si opts está vacio o indefinido, será '{}'.
-	opts = vim.tbl_deep_extend("force", default_opts, opts or {})
+	opts = vim.tbl_deep_extend("force", default_opts, opts or {}) --unir tablas valor por valor.
 
 	local augroup = vim.api.nvim_create_augroup("luasnip-latex", { clear = true })
 	vim.api.nvim_create_autocmd("FileType", {
@@ -31,7 +34,7 @@ M.setup = function(opts)
 			group = augroup,
 			once = true,
 			callback = function()
-				M.setup_markdown()
+				M.setup_markdown() --Se define más adelante
 			end,
 		})
 	end
@@ -59,6 +62,8 @@ local _autosnippets = function(is_math, not_math)
 	return autosnippets
 end
 
+-- LATEX SETUP
+
 M.setup_tex = function(is_math, not_math)
 	local ls = require("luasnip")
 	ls.add_snippets("tex", {
@@ -80,6 +85,8 @@ M.setup_tex = function(is_math, not_math)
 
 	ls.add_snippets("tex", _autosnippets(is_math, not_math), { type = "autosnippets", default_priority = 0 }) --snippet que se autocompletan
 end
+
+-- MARKDOWN SETUP
 
 M.setup_markdown = function()
 	local ls = require("luasnip")
@@ -105,7 +112,7 @@ M.setup_markdown = function()
 		local t = require(("luasnip-latex.%s"):format(str)).retrieve(not_math)
 		vim.list_extend(to_filter, vim.tbl_map(trigger_of_snip, t)) -- Obtiene el "trigger" de cada snippet y lo almacena en "to_filter".
 	end
-	-- Añadir los entornode markdown, como align:
+	-- Añadir los entornos de markdown, como align:
 	local env_markdown = require("luasnip-latex.env_markdown").retrieve(is_math)
 	ls.add_snippets("markdown", env_markdown, { default_priority = 0 })
 
