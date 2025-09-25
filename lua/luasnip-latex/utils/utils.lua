@@ -1,19 +1,8 @@
 local M = {}
 
 local ls = require("luasnip")
--- local s = ls.snippet
--- local sn = ls.snippet_node
--- local isn = ls.indent_snippet_node
--- local t = ls.text_node
--- local i = ls.insert_node
--- local f = ls.function_node
--- local c = ls.choice_node
--- local d = ls.dynamic_node
--- local events = require("luasnip.util.events")
--- local r = require("luasnip.extras").rep
--- local fmt = require("luasnip.extras.fmt").fmt
---
--- local fmta = require("luasnip.extras.fmt").fmta
+local sn = ls.snippet_node
+local i = ls.insert_node
 
 -- Es como el pipe de Linux para extender comandos!
 M.pipe = function(fns) --- Función que toma como argumento una tabla de funciones.
@@ -74,6 +63,15 @@ end
 M.with_opts = function(fn, opts)
 	return function()
 		return fn(opts)
+	end
+end
+
+M.get_visual= function(_, parent)
+	local text = parent.snippet.env.LS_SELECT_DEDENT
+	if #text > 0 then
+		return sn(nil, { i(1, text) })
+	else
+		return sn(nil, { i(1) })
 	end
 end
 

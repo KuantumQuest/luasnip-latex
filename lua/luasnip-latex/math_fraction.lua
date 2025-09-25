@@ -9,15 +9,7 @@ local sn = ls.snippet_node
 local i = ls.insert_node
 local t = ls.text_node
 local fmta = require("luasnip.extras.fmt").fmta
-
-local get_visual = function(_, parent)
-	local text = parent.snippet.env.LS_SELECT_DEDENT
-	if #text > 0 then
-		return sn(nil, { i(1, text) })
-	else
-		return sn(nil, { i(1) })
-	end
-end
+local get_visual = require("luasnip-latex.utils.utils").get_visual
 
 local frac_parens_nodes = {
 	d(1, function(_, parent)
