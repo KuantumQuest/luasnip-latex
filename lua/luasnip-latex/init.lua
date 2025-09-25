@@ -156,7 +156,6 @@ local function handle_local_snippets()
     remove_local_snippets(relevant_ft)
     local_snippets_state.current_dir[relevant_ft] = dir
     -- Load new local snippets if present
-    print("Dentro de local_snippets_state.current_dir")
     load_local_snippets(relevant_ft, dir)
   end
 end
