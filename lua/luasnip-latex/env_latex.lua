@@ -27,20 +27,33 @@ function M.retrieve(not_math)
 	local condition = pipe({ not_math })
 	local s = ls.extend_decorator.apply(ls.snippet, {
 		condition = condition,
-	}) --[[@as function]]
+	})
 	return {
 		s(
-			{ trig = "ali", name = "Align" },
+			{trig = "pack", name = "Package",},
+			fmta("\\usepackage[<>]{<>}",
+        {ls.insert_node(1, "Options"), ls.insert_node(2, "Package"),})),
+	s({ trig = "mk", name = "Line Math" , snippetType= "autosnippet"}, fmta([[$<>$]], { i(1)})),
+	s(
+		{ trig = "nk", name = "Block Math" , snippetType= "autosnippet"},
+		fmta(
+			[[
+      \[
+      <>
+      \]
+      ]],
+			{i(1),})
+	),
+		s(
+			{ trig = "ali", name = "Align"},
 			fmta(
 				[[
-      \begin{align}
-        <>
-      \end{align}
-      <>
-      ]],
+        \begin{align*}
+          <>
+        \end{align*}
+        ]],
 				{
 					i(1),
-					i(0),
 				}
 			)
 		),
@@ -51,11 +64,9 @@ function M.retrieve(not_math)
       \begin{cases}
         <>
       \end{cases}
-      <>
       ]],
 				{
 					i(1),
-					i(0),
 				}
 			)
 		),
@@ -66,12 +77,10 @@ function M.retrieve(not_math)
       \begin{<key1>}
         <>
       \end{<key1>}
-      <>
       ]],
 				{
 					key1 = i(1),
 					d(2, get_visual),
-					i(0),
 				},
 				{
 					repeat_duplicates = true,
@@ -82,11 +91,10 @@ function M.retrieve(not_math)
 			{ trig = "bigfun", name = "Big function" },
 			fmta(
 				[[
-          \begin{align}
+          \begin{align*}
             <>: <> &\longrightarrow <> \\
             <> &\longmapsto <> 
-          \end{align}
-          <>
+          \end{align*}
         ]],
 				{
 					i(1, "f"),
@@ -94,7 +102,6 @@ function M.retrieve(not_math)
 					i(3),
 					i(4),
 					i(5),
-					i(0),
 				}
 			)
 		),

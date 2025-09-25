@@ -66,6 +66,7 @@ local greek_lower_snippets = function()
 		{ prefix_sgreek, "ch", "chi" },
 		{ prefix_sgreek, "si", "sigma" },
 		{ prefix_sgreek, "ps", "psi" },
+    { prefix_sgreek, "na", "nabla"}
 	}
 	local build = build_with_priority(trigineitor, unique_node, 10)
 	return vim.tbl_map(build, tbl)
@@ -82,17 +83,18 @@ local greek_upper_snippets = function()
 		{ prefix_sgreek, "La", "Lambda" },
 		{ prefix_sgreek, "Ps", "Psi" },
 	}
+
 	local build = build_with_priority(trigineitor, unique_node, 10)
 	return vim.tbl_map(build, tbl)
 end
 
 local short_commands = function()
 	local tbl = {
-		{ "", "ln", "ln " },
-		{ "", "log", "log " },
-		{ "", "exx", "exp " },
-		{ "", "perp", "perp " },
-		{ "", "int", "int " },
+		{ "", "ln", "ln" },
+		{ "", "log", "log" },
+		{ "", "exx", "exp" },
+		{ "", "perp", "perp" },
+		{ "", "int", "int" },
 	}
 	local build = build_with_priority(trigineitor, unique_node, 10)
 	return vim.tbl_map(build, tbl)

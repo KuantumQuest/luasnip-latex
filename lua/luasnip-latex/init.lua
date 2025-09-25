@@ -10,8 +10,7 @@ local default_opts = {
 -- PLUGGIN SETUP
 
 M.setup = function(opts)
-	-- Toma más prioridad a la tabla de la derecha 'opts or {}', si opts está vacio o indefinido, será '{}'.
-	opts = vim.tbl_deep_extend("force", default_opts, opts or {}) --unir tablas valor por valor.
+	opts = vim.tbl_deep_extend("force", default_opts, opts or {}) --unir tablas valor por valor
 
 	local augroup = vim.api.nvim_create_augroup("luasnip-latex", { clear = true })
 	vim.api.nvim_create_autocmd("FileType", {
@@ -40,23 +39,20 @@ M.setup = function(opts)
 	end
 end
 
-local _autosnippets = function(is_math, not_math)
+-- Load autosnippets of markdown and LaTeX
+local _all_autosnippets = function(is_math)
 	local autosnippets = {}
 
+  -- In math
 	for _, s in ipairs({
-		"math_iA",
-		"math_fs", -- Function and sub-script
-		"math_vec",
-		"math_greeks_short", -- Greeks symbols and short commands
+		"math_fraction", -- Function and sub-script
+		"math_vector",
+		"math_symbol", -- Greeks symbols and short commands
+    "math_diff",
+		"math_base",
+    "math_matrix"
 	}) do
 		vim.list_extend(autosnippets, require(("luasnip-latex.%s"):format(s)).retrieve(is_math))
-	end
-
-	for _, s in ipairs({
-		"env_latex",
-		"env_math",
-	}) do
-		vim.list_extend(autosnippets, require(("luasnip-latex.%s"):format(s)).retrieve(not_math))
 	end
 
 	return autosnippets
@@ -66,24 +62,13 @@ end
 
 M.setup_tex = function(is_math, not_math)
 	local ls = require("luasnip")
-	ls.add_snippets("tex", {
-		ls.snippet(
-			{
-				trig = "pack",
-				name = "Package",
-			},
-			require("luasnip.extras.fmt").fmta("\\usepackage[<>]{<>}", {
-				ls.insert_node(1, "Options"),
-				ls.insert_node(2, "Package"),
-			})
-		),
-	})
+  -- Añadimos los snippets
+	local math_base_snippet = require("luasnip-latex.math_base_snippet").retrieve(is_math) --Recibe todos los snippets de 'math_base_snippet', pero están en función de is_math, gracias a la función 'pipe' que está en 'utils.lua'
+	ls.add_snippets("tex", math_base_snippet, { default_priority = 0 }) -- Se añaden los snippets de 'math_base_snippet'
+  local env_latex= require("luasnip-latex.env_latex").retrieve(not_math)
+	ls.add_snippets("tex", env_latex, { default_priority = 0 })
 
-	local math_i = require("luasnip-latex.math_i").retrieve(is_math) --Recibe todos los snippets de 'math_i', pero están en función de is_math, gracias a la función 'pipe' que está en 'utils.lua'
-
-	ls.add_snippets("tex", math_i, { default_priority = 0 }) -- Se añaden los snippets de 'math_i'
-
-	ls.add_snippets("tex", _autosnippets(is_math, not_math), { type = "autosnippets", default_priority = 0 }) --snippet que se autocompletan
+	ls.add_snippets("tex", _all_autosnippets(is_math), { type = "autosnippets", default_priority = 0 }) --snippet que se autocompletan
 end
 
 -- MARKDOWN SETUP
@@ -91,76 +76,16 @@ end
 M.setup_markdown = function()
 	local ls = require("luasnip")
 	local utils = require("luasnip-latex.utils.utils")
-	local pipe = utils.pipe
 
 	local is_math = utils.with_opts(utils.is_math, true)
 	local not_math = utils.with_opts(utils.not_math, true)
 
-	local math_i = require("luasnip-latex.math_i").retrieve(is_math)
-	ls.add_snippets("markdown", math_i, { default_priority = 0 })
-
-	local autosnippets = _autosnippets(is_math, not_math)
-	local trigger_of_snip = function(s)
-		return s.trigger
-	end
-
-	local to_filter = {}
-	for _, str in ipairs({
-		"env_latex",
-		"env_math",
-	}) do
-		local t = require(("luasnip-latex.%s"):format(str)).retrieve(not_math)
-		vim.list_extend(to_filter, vim.tbl_map(trigger_of_snip, t)) -- Obtiene el "trigger" de cada snippet y lo almacena en "to_filter".
-	end
-	-- Añadir los entornos de markdown, como align:
-	local env_markdown = require("luasnip-latex.env_markdown").retrieve(is_math)
+	local math_base_snippet = require("luasnip-latex.math_base_snippet").retrieve(is_math)
+	ls.add_snippets("markdown", math_base_snippet, { default_priority = 0 })
+	local env_markdown = require("luasnip-latex.env_markdown").retrieve(not_math)
 	ls.add_snippets("markdown", env_markdown, { default_priority = 0 })
 
-	local filtered = vim.tbl_filter(function(s)
-		return not vim.tbl_contains(to_filter, s.trigger)
-	end, autosnippets) -- almacena una tabla con los snippets "autosnippets" que no estén en "to_filter", es decir los snippets que no son propios de LaTeX.
-
-	local parse_snippet = ls.extend_decorator.apply(ls.parser.parse_snippet, {
-		condition = pipe({ not_math }),
-	}) --[[@as function]]
-	local s = ls.extend_decorator.apply(ls.snippet, { condition = pipe({ not_math }) })
-	local fmta = require("luasnip.extras.fmt").fmta
-	local i = ls.insert_node
-	local d = ls.dynamic_node
-	local sn = ls.snippet_node
-
-	local get_visual = function(_, parent)
-		local text = parent.snippet.env.LS_SELECT_DEDENT
-		if #text > 0 then
-			return sn(nil, { i(1, text) })
-		else
-			return sn(nil, { i(1) })
-		end
-	end
-
-	-- tex delimiters
-	local env_math_snippets = {
-		s({ trig = "mk", name = "Line Math" }, fmta([[$<>$<>]], { d(1, get_visual), i(0) })),
-		s(
-			{ trig = "nk", name = "Block Math" },
-			fmta(
-				[[
-      $$
-      <>
-      $$
-      ]],
-				{
-					d(1, get_visual),
-				}
-			)
-		),
-	}
-	vim.list_extend(filtered, env_math_snippets)
-
-	ls.add_snippets("markdown", filtered, {
-		type = "autosnippets",
-		default_priority = 0,
-	})
+	ls.add_snippets("markdown", _all_autosnippets(is_math), { type = "autosnippets", default_priority = 0 })
 end
 
 return M
