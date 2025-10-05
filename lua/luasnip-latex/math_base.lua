@@ -160,8 +160,8 @@ function M.retrieve(is_math)
 		s({ trig = "QQ", name = "Rational Numbers" }, { t("\\mathbb{Q}") }),
 		s({ trig = "ZZ", name = "Integers Numbers" }, { t("\\mathbb{Z}") }),
 		s({ trig = "NN", name = "Natural Numbers" }, { t("\\mathbb{N}") }),
-		s({ trig = "imp", name = "implies", wordTrig = false }, { t("\\implies") }),
-		s({ trig = "simp", name = "short implies", priority = 50 }, { t("\\Rightarrow") }),
+		s({ trig = "imp", name = "implies"}, { t("\\implies") }),
+		s({ trig = "simp", name = "short implies"}, { t("\\Rightarrow") }),
 		s({ trig = "rimp", name = "implied by" }, t("\\impliedby")),
 
 		-- Index
