@@ -99,7 +99,7 @@ function M.retrieve(is_math)
 			name = "over right arrow",
 			desc = "flecha de vector, pero que se adapta mucho mejor",
 		},
-      fmta([[\\overrightarrow{<>}<>]], {d(1,get_visual), i(0)})
+      fmta([[\overrightarrow{<>}<>]], {d(1,get_visual), i(0)})
     ),
 		s({
 			trig = "(%a+)ola",
@@ -119,7 +119,7 @@ function M.retrieve(is_math)
 			name = "over left arrow",
 			desc = "flecha de vector, pero que se adapta mucho mejor",
 		},
-      fmta([[\\overleftarrow{<>}<>]], {d(1,get_visual), i(0)})
+      fmta([[\overleftarrow{<>}<>]], {d(1,get_visual), i(0)})
     ),
 		s({ trig = "__", name = "subscript", wordTrig = false }, fmta("_{<>}<>", { i(1), i(0) })),
 		s({
