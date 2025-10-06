@@ -95,6 +95,13 @@ function M.retrieve(is_math)
 			i(0),
 		}),
 		s({
+			trig = "ora",
+			name = "over right arrow",
+			desc = "flecha de vector, pero que se adapta mucho mejor",
+		},
+      fmta([[\\overrightarrow{<>}<>]], {d(1,get_visual), i(0)})
+    ),
+		s({
 			trig = "(%a+)ola",
 			wordTrig = false,
 			regTrig = true,
@@ -107,7 +114,13 @@ function M.retrieve(is_math)
 			end),
 			i(0),
 		}),
-
+		s({
+			trig = "ola",
+			name = "over left arrow",
+			desc = "flecha de vector, pero que se adapta mucho mejor",
+		},
+      fmta([[\\overleftarrow{<>}<>]], {d(1,get_visual), i(0)})
+    ),
 		s({ trig = "__", name = "subscript", wordTrig = false }, fmta("_{<>}<>", { i(1), i(0) })),
 		s({
 			trig = "(\\?%a+)__",
