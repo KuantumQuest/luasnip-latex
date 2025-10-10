@@ -67,6 +67,7 @@ local greek_lower_snippets = function()
 		{ prefix_sgreek, "si", "sigma" },
 		{ prefix_sgreek, "ps", "psi" },
     { prefix_sgreek, "na", "nabla"}
+    { prefix_sgreek, "nu", "nu"}
 	}
 	local build = build_with_priority(trigineitor, unique_node, 10)
 	return vim.tbl_map(build, tbl)
