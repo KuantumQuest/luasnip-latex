@@ -21,7 +21,7 @@ function M.retrieve(is_math)
 				trig = "seq",
 				name = "Sequence (series)",
 			},
-			fmta([[\left({<>}_{<>}\right)_{<>=<>}^{<>}<>]], {
+			fmta([[\left\{{<>}_{<>}\right\}_{<>=<>}^{<>}<>]], {
 				i(1, "a"),
 				i(2, "n"),
 				rep(2),
